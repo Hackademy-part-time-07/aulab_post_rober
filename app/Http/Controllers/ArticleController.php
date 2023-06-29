@@ -8,19 +8,12 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Category;
 
-
 class ArticleController extends Controller
 {
 
     
 
-    public function showArticles($categoryId)
-{
-    $category = Category::findOrFail($categoryId);
-    $articles = Article::where('category_id', $category->id)->get();
-
-    return view('article.categories', compact('category', 'articles'));
-}
+    
 
     
     
@@ -52,10 +45,13 @@ class ArticleController extends Controller
     
 
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    
+    public function showArticles(Category $category)
+{
+    $articles = $category->articles;
+
+    return view('article.categories', compact('articles', 'category'));
+}
+
 
 public function create()
 {
@@ -71,24 +67,32 @@ public function create()
      */
 
      public function store(Request $request)
-     {
-         // Validación de los datos del formulario si es necesario
-     
-         $article = new Article;
-         $article->title = $request->input('title');
-         $article->subtitle = $request->input('subtitle');
-         $article->body = $request->input('body');
-       
-         $imagePath = $request->file('image')->store('public/images');
-         $article->image = 'storage/' . substr($imagePath, 7); // Eliminar "public/" del inicio de la ruta
-         $article->user_id = $request->input('user_id');
-         $article->category_id = $request->input('category_id');
-         $article->save();
-     
-         // Otras acciones después de guardar el artículo
-        
-         return redirect()->route('articles.index');
-     }
+{
+    // Validación de los datos del formulario si es necesario
+
+    $article = new Article;
+    $article->title = $request->input('title');
+    $article->subtitle = $request->input('subtitle');
+    $article->body = $request->input('body');
+
+    $imagePath = $request->file('image')->store('public/images');
+    $article->image = 'storage/' . substr($imagePath, 7); // Eliminar "public/" del inicio de la ruta
+
+    $article->user_id = $request->input('user_id');
+    $article->save();
+
+    // Obtener las categorías seleccionadas
+    $categories = $request->input('category_id');
+    $article->categories()->attach($categories);
+
+    // Otras acciones después de guardar el artículo
+
+    return redirect()->route('articles.index');
+}
+
+
+
+
      
 
 

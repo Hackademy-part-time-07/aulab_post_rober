@@ -38,13 +38,15 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="category_id">Category</label>
-                            <select class="form-control" id="category_id" name="category_id">
-                                <option value="">-- Select Category --</option>
-                                @foreach($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                @endforeach
-                            </select>
+                            <label for="category_id">Categories</label>
+                            @foreach($categories as $category)
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="category_id[]" id="category_{{ $category->id }}" value="{{ $category->id }}">
+                                    <label class="form-check-label" for="category_{{ $category->id }}">
+                                        {{ $category->name }}
+                                    </label>
+                                </div>
+                            @endforeach
                         </div>
 
                         <button type="submit" class="btn btn-primary">Create</button>
