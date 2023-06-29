@@ -71,23 +71,25 @@ public function create()
      */
 
      public function store(Request $request)
-{
-    // Validación de los datos del formulario si es necesario
-
-    $article = new Article;
-    $article->title = $request->input('title');
-    $article->subtitle = $request->input('subtitle');
-    $article->body = $request->input('body');
-    $article->image = $request->file('image')->store('images');
-    $article->user_id = $request->input('user_id');
-    $article->category_id = $request->input('category_id');
-    $article->save();
-
-    // Otras acciones después de guardar el artículo
-
-    return redirect()->route('articles.index');
-}
-
+     {
+         // Validación de los datos del formulario si es necesario
+     
+         $article = new Article;
+         $article->title = $request->input('title');
+         $article->subtitle = $request->input('subtitle');
+         $article->body = $request->input('body');
+       
+         $imagePath = $request->file('image')->store('public/images');
+         $article->image = 'storage/' . substr($imagePath, 7); // Eliminar "public/" del inicio de la ruta
+         $article->user_id = $request->input('user_id');
+         $article->category_id = $request->input('category_id');
+         $article->save();
+     
+         // Otras acciones después de guardar el artículo
+        
+         return redirect()->route('articles.index');
+     }
+     
 
 
 public function category()
