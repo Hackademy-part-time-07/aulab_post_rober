@@ -15,7 +15,16 @@
                       <h5 class="card-title">{{ $article->title }}</h5>
                       <h6 class="card-subtitle mb-2 text-muted">{{ $article->subtitle }}</h6>
                       <p class="card-text">{{ $article->body }}</p>
-                      <p class="card-text">Author: {{ $article->user->name }}</p>
+                      <p class="card-text">Categories:</p>
+                        <ul>
+                            @foreach ($article->categories as $category)
+                                <li>
+                                    <a href="{{ route('categories.showArticles', $category->id) }}">{{ $category->name ?? 'N/A' }}</a>
+                                </li>
+                            @endforeach
+                        </ul>
+                      <p class="card-text">Author: <a href="{{ route('articles.showByAuthor', $article->user) }}">{{ $article->user->name }}</a></p>
+
                       <a href="{{ route('articles.show', $article->id) }}" class="btn btn-primary">Read More</a>
                   </div>
               </div>

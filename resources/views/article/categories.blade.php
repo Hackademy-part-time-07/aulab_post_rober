@@ -2,7 +2,6 @@
 
     <div class="container">
 
-        <h1>Category: {{ $category->name }}</h1>
 
         @foreach ($articles as $article)
 
@@ -18,7 +17,7 @@
 
                 <p class="card-text">{{ $article->body }}</p>
 
-                <p class="card-text">Author: {{ $article->user->name }}</p>
+                <p class="card-text">Author: <a href="{{ route('articles.showByAuthor', $article->user) }}">{{ $article->user->name }}</a></p>
 
                 <p class="card-text">Categories:</p>
                 <ul>

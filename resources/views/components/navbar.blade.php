@@ -14,13 +14,11 @@
                 </li>
                 
                 
-                @auth
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('articles.create') }}">create</a>
                     </li>
                     
                     
-                @endauth
                 
             </ul>
             <form class="d-flex">

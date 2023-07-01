@@ -2,141 +2,122 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\CategoryController;
 use App\Models\Article;
-use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Category;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class ArticleController extends Controller
 {
-
-    
-
-    
-
-    
-    
-    
-    
-
-    /**
-     * Display a listing of the resource.
-     */
-    
-
-     public function index()
-{
-    $articles = Article::all();
-    return view('article.index', compact('articles'));
-}
-
-     
-
-
-    
-
-
-    public function homepage()
+    public function index()
     {
-        $articles = Article::orderBy('created_at', 'desc')->take(4)->get();
-        return view('welcome', compact('articles'));
+        $articles = Article::all();
+        return view('article.index', compact('articles'));
     }
-    
 
+    public function home()
+    {
+        $articles = Article::latest()->take(5)->get();
+        return view('home', compact('articles'));
+    }
 
     public function showArticles(Category $category)
+    {
+        $articles = $category->articles;
+        return view('article.categories', compact('articles', 'category'));
+    }
+
+
+    public function showByAuthor(User $author)
+    {
+        $articles = $author->articles; // Obtén los artículos del autor
+
+        return view('article.categories', compact('articles', 'author'));
+    }
+
+
+
+    public function create()
+    {
+        $users = User::all();
+        return view('article.create', compact('users'));
+    }
+
+    public function store(Request $request)
 {
-    $articles = $category->articles;
+    // Validar los datos del formulario
+    $validatedData = $request->validate([
+        'title' => 'required',
+        'subtitle' => 'required',
+        'body' => 'required',
+        'image' => 'required|image',
+        'category_id' => 'required|array',
+        'user_id' => 'required|exists:users,id', // Asegurar que el user_id exista en la tabla users
+        // Otros campos validados...
+    ]);
 
-    return view('article.categories', compact('articles', 'category'));
-}
-
-
-public function create()
-{
-    $users = User::all(); // Obtener todos los usuarios
-    return view('article.create', compact('users')); // Pasar los usuarios a la vista
-}
-
-
-
-
-    /**
-     * Store a newly created resource in storage.
-     */
-
-     public function store(Request $request)
-{
-    // Validación de los datos del formulario si es necesario
-
+    // Crear una instancia del artículo y asignar los valores
     $article = new Article;
-    $article->title = $request->input('title');
-    $article->subtitle = $request->input('subtitle');
-    $article->body = $request->input('body');
+    $article->title = $validatedData['title'];
+    $article->subtitle = $validatedData['subtitle'];
+    $article->body = $validatedData['body'];
+    $article->user_id = $validatedData['user_id'];
 
     $imagePath = $request->file('image')->store('public/images');
-    $article->image = 'storage/' . substr($imagePath, 7); // Eliminar "public/" del inicio de la ruta
+    $article->image = 'storage/' . substr($imagePath, 7);
 
-    $article->user_id = $request->input('user_id');
+    // Guardar el artículo en la base de datos
     $article->save();
 
-    // Obtener las categorías seleccionadas
-    $categories = $request->input('category_id');
+    // Asociar las categorías seleccionadas al artículo
+    $categories = $validatedData['category_id'];
     $article->categories()->attach($categories);
-
-    // Otras acciones después de guardar el artículo
 
     return redirect()->route('articles.index');
 }
 
 
-
-
-     
-
-
-public function category()
-{
-    return $this->belongsTo(Category::class);
-}
-
-
-
-     
-
-    /**
-     * Display the specified resource.
-     */
     public function show(Article $article)
     {
         return view('article.show', compact('article'));
     }
-    
 
-    
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Article $article)
     {
-        //
+        return view('article.edit', compact('article'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Article $article)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'subtitle' => 'required',
+            'body' => 'required',
+            'image' => 'image',
+            'category_id' => 'required|array',
+        ]);
+
+        $article->title = $request->input('title');
+        $article->subtitle = $request->input('subtitle');
+        $article->body = $request->input('body');
+
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('public/images');
+            $article->image = 'storage/' . substr($imagePath, 7);
+        }
+
+        $article->categories()->sync($request->input('category_id'));
+        $article->save();
+
+        return redirect()->route('articles.show', $article);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Article $article)
     {
-        //
+        $article->categories()->detach();
+        $article->delete();
+
+        return redirect()->route('articles.index');
     }
 }

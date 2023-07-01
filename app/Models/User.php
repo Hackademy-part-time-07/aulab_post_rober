@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -21,6 +22,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'is_admin',
+        'is_revisor',
+        'is_writer',
     ];
 
     /**
@@ -43,17 +47,27 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-
-
-    public function articles(){
-        return $this -> hasMany(Article::class);
+    public function articles()
+    {
+        return $this->hasMany(Article::class);
     }
 
-
-    public function create()
+    public static function create(array $input)
 {
-    $users = User::all();
+    $user = new User();
 
-    return view('articles.create', compact('users'));
+    $user->name = $input['name'];
+    $user->email = $input['email'];
+    $user->password = bcrypt($input['password']);
+    $user->is_admin = false;
+    $user->is_revisor = false;
+    $user->is_writer = false;
+
+    $user->save();
+
+    $users = [$user]; // Crear un array con el usuario creado
+
+    return view('home', compact('users'));
 }
+
 }
