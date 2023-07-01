@@ -70,4 +70,15 @@ class User extends Authenticatable implements MustVerifyEmail
     return view('home', compact('users'));
 }
 
+public function writer()
+{
+    return $this->hasOne(Writer::class, 'id', 'is_writer');
+}
+
+public function revisor()
+{
+    return $this->hasOne(Revisor::class, 'id', 'is_revisor');
+}
+
+
 }

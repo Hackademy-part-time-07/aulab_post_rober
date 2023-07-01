@@ -1,13 +1,12 @@
 <?php
-namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PublicController;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Route;
 use App\Models\User;
-
-
 
 
 /*
@@ -20,6 +19,7 @@ use App\Models\User;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
 Route::get('/', [ArticleController::class, 'home'])->name('home');
 Route::get('/articles/create', [ArticleController::class, 'create'])->name('articles.create');
 Route::post('/articles', [ArticleController::class, 'store'])->name('articles.store');
@@ -28,9 +28,14 @@ Route::get('/articles', [ArticleController::class, 'index'])->name('articles.ind
 Route::get('/categories/{category}', [ArticleController::class, 'showArticles'])->name('categories.showArticles');
 Route::get('/careers', [PublicController::class, 'careers'])->name('careers');
 Route::post('/solicitud', [PublicController::class, 'store'])->name('career_request.store');
-Route::get('/articles/author/{author}', [ArticleController::class, 'showByAuthor'])
-    ->name('articles.showByAuthor');
+Route::get('/articles/author/{author}', [ArticleController::class, 'showByAuthor'])->name('articles.showByAuthor');
+Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+Route::put('/users/{userId}/updateRole', [AdminController::class, 'updateRole'])->name('admin.updateRole');
 
 
 
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+Route::put('/users/{userId}/updateRole', [AdminController::class, 'updateRole'])->name('admin.updateRole');
 
+});
