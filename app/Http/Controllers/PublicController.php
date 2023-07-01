@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use App\Mail\CareerRequestMail;
 use App\Models\User;
+use Illuminate\Support\Facades\Redirect;
+
 
 
 
@@ -29,38 +31,27 @@ public function welcome(){
 
 
 
-  public function careersSubmit(Request $request)
+  
+
+
+  public function store(Request $request)
 {
-    $request->validate([
-        'role' => 'required',
-        'email' => 'required|email', // Se corrigió el nombre del validador "require" a "required"
-        'message' => 'required',
-    ]);
-    $user = Auth::user();
-    $role = $request->role;
-    $email = $request->email;
-    $message = $request->message;
-
-    // Se elimina la línea de código "$user = Auth::user();" ya que no es necesario en este contexto
-    Mail::to('admin@theaulabpost.es')->send(new CareerRequestMail(compact('role', 'email', 'message')));
-    switch ($role) {
-      case 'admin':
-          $user->is_admin = null;
-          break;
-
-      case 'revisor':
-          $user->is_revisor = null;
-          break;
-
-      case 'writer':
-          $user->is_writer = null;
-          break;
-  }
-
-  $user->save(); // Se guarda el modelo User después de actualizar las propiedades
-
-  return redirect(route('home'))->with('message', '¡Gracias por su interés!');
+    // Validar y procesar los datos del formulario
+    $role = $request->input('papel');
+    $message = $request->input('mensaje');
+    $email = auth()->user()->email; // Obtener el correo electrónico del usuario registrado
+    
+    // Convertir el campo "mensaje" a una cadena de texto
+    $message = $request->input('mensaje') ?? ''; // Si no se proporciona un valor, establecer una cadena vacía
+    
+    // Envía el correo electrónico a través de Mailtrap
+    Mail::to('mailtrap-email@example.com')->send(new CareerRequestMail($role, $message, $email));
+    
+    // Redirige al usuario a la ruta "home" con un mensaje de éxito
+    return redirect()->route('home')->with('success', 'Correo electrónico enviado correctamente.');
 }
+
+  
 
 }
 

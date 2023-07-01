@@ -17,6 +17,13 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('articles.create') }}">create</a>
                     </li>
+
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('careers') }}">Careers</a>
+                        </li>
+                    </ul>
+                    
                     
                     
                 

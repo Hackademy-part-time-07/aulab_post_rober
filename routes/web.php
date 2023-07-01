@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PublicController;
 use App\Models\User;
 
 
@@ -26,6 +27,10 @@ Route::get('/articles/{article}', [ArticleController::class, 'show'])->name('art
 Route::get('/articles', [ArticleController::class, 'index'])->name('articles.index');
 Route::get('/categories/{category}', [ArticleController::class, 'showArticles'])->name('categories.showArticles');
 Route::get('/careers', [PublicController::class, 'careers'])->name('careers');
-Route::post('/careers/submit', [PublicController::class, 'careersSubmit'])->name('careers.careersSubmit');
+Route::post('/solicitud', [PublicController::class, 'store'])->name('career_request.store');
 Route::get('/articles/author/{author}', [ArticleController::class, 'showByAuthor'])
     ->name('articles.showByAuthor');
+
+
+
+
