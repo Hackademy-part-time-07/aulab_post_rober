@@ -39,43 +39,51 @@ class ArticleController extends Controller
 
 
     public function create()
-    {
-        $users = User::all();
-        return view('article.create', compact('users'));
-    }
+{
+    $user = auth()->user(); // Obtener el usuario autenticado
+    return view('article.create', compact('user'));
+}
+
 
     public function store(Request $request)
-{
-    // Validar los datos del formulario
-    $validatedData = $request->validate([
-        'title' => 'required',
-        'subtitle' => 'required',
-        'body' => 'required',
-        'image' => 'required|image',
-        'category_id' => 'required|array',
-        'user_id' => 'required|exists:users,id', // Asegurar que el user_id exista en la tabla users
-        // Otros campos validados...
-    ]);
-
-    // Crear una instancia del artículo y asignar los valores
-    $article = new Article;
-    $article->title = $validatedData['title'];
-    $article->subtitle = $validatedData['subtitle'];
-    $article->body = $validatedData['body'];
-    $article->user_id = $validatedData['user_id'];
-
-    $imagePath = $request->file('image')->store('public/images');
-    $article->image = 'storage/' . substr($imagePath, 7);
-
-    // Guardar el artículo en la base de datos
-    $article->save();
-
-    // Asociar las categorías seleccionadas al artículo
-    $categories = $validatedData['category_id'];
-    $article->categories()->attach($categories);
-
-    return redirect()->route('articles.index');
-}
+    {
+        // Verificar si el usuario autenticado es un escritor oficial
+        if (auth()->check() && auth()->user()->is_writer == 1) {
+            // Validar los datos del formulario
+            $validatedData = $request->validate([
+                'title' => 'required',
+                'subtitle' => 'required',
+                'body' => 'required',
+                'image' => 'required|image',
+                'category_id' => 'required|array',
+                'user_id' => 'required|exists:users,id', // Asegurar que el user_id exista en la tabla users
+                // Otros campos validados...
+            ]);
+    
+            // Crear una instancia del artículo y asignar los valores
+            $article = new Article;
+            $article->title = $validatedData['title'];
+            $article->subtitle = $validatedData['subtitle'];
+            $article->body = $validatedData['body'];
+            $article->user_id = $validatedData['user_id'];
+    
+            $imagePath = $request->file('image')->store('public/images');
+            $article->image = 'storage/' . substr($imagePath, 7);
+    
+            // Guardar el artículo en la base de datos
+            $article->save();
+    
+            // Asociar las categorías seleccionadas al artículo
+            $categories = $validatedData['category_id'];
+            $article->categories()->attach($categories);
+    
+            return redirect()->route('articles.index');
+        } else {
+            // Usuario no autorizado para crear artículos
+            return redirect()->route('articles.index')->with('warning', 'Solo los escritores oficiales pueden crear artículos. Si quieres colaborar, por favor contáctanos en la sección de carreras.');
+        }
+    }
+    
 
 
     public function show(Article $article)

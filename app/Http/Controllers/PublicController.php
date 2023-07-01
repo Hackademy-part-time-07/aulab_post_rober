@@ -39,17 +39,17 @@ public function welcome(){
     // Validar y procesar los datos del formulario
     $role = $request->input('papel');
     $message = $request->input('mensaje');
+
     $email = auth()->user()->email; // Obtener el correo electrónico del usuario registrado
-    
-    // Convertir el campo "mensaje" a una cadena de texto
-    $message = $request->input('mensaje') ?? ''; // Si no se proporciona un valor, establecer una cadena vacía
-    
+   
     // Envía el correo electrónico a través de Mailtrap
     Mail::to('mailtrap-email@example.com')->send(new CareerRequestMail($role, $message, $email));
     
     // Redirige al usuario a la ruta "home" con un mensaje de éxito
     return redirect()->route('home')->with('success', 'Correo electrónico enviado correctamente.');
 }
+
+  
 
   
 

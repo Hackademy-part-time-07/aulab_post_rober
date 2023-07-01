@@ -27,15 +27,9 @@
                             <input type="file" class="form-control" id="image" name="image" accept="image/*" required>
                         </div>
 
-                        <div class="form-group">
-                            <label for="user_id">User</label>
-                            <select class="form-control" id="user_id" name="user_id">
-                                <option value="">-- Select User --</option>
-                                @foreach($users as $user)
-                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                        @auth
+                            <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+                        @endauth
 
                         <div class="form-group">
                             <label for="category_id">Categories</label>
@@ -50,6 +44,17 @@
                         </div>
 
                         <button type="submit" class="btn btn-primary">Create</button>
+                   
+                        @guest
+                        <p>Solo los usuarios registrados autorizados pueden crear contenido.</p>
+                    @endguest
+                    @if($user->is_writer == 0)
+    <div class="alert alert-info">
+        No tienes permisos para crear artículos. Si deseas colaborar, contáctanos en la sección de careers.
+    </div>
+@endif
+
+                   
                     </form>
                 </div>
             </div>

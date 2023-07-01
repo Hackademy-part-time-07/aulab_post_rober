@@ -13,7 +13,9 @@
                     <a class="nav-link" href="{{ route('articles.index') }}">Index</a>
                 </li>
                 
-                
+                @auth
+                    
+               
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('articles.create') }}">create</a>
                     </li>
@@ -23,6 +25,8 @@
                             <a class="nav-link" href="{{ route('careers') }}">Careers</a>
                         </li>
                     </ul>
+
+                    @endauth
                     
                     
                     

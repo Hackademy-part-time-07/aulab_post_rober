@@ -7,7 +7,6 @@
 <body>
     <h1>Solicitud de empleo</h1>
     <p>Rol solicitado: {{ $role }}</p>
-    <p>Mensaje: {{ $email }}</p>
+    <p>Email: {{ $email }}</p>
 </body>
 </html>
-
