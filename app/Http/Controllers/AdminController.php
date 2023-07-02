@@ -20,7 +20,7 @@ class AdminController extends Controller
         }
 
         // Obtener los últimos dos usuarios registrados en la base de datos
-        $users = $query->latest()->take(2)->get();
+        $users = $query->latest()->take(10)->get();
 
         // Retornar la vista del panel de administración con los datos necesarios
         return view('admin.dashboard', ['users' => $users]);

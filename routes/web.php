@@ -26,7 +26,7 @@ Route::get('/articles/create', [ArticleController::class, 'create'])->name('arti
 Route::post('/articles', [ArticleController::class, 'store'])->name('articles.store');
 Route::get('/articles/{article}', [ArticleController::class, 'show'])->name('articles.show');
 Route::get('/articles', [ArticleController::class, 'index'])->name('articles.index');
-Route::get('/categories/{category}', [ArticleController::class, 'showArticles'])->name('categories.showArticles');
+Route::get('/categories/{category}', [ArticleController::class, 'showArticlesCategory'])->name('categories.showArticlesCategory');
 Route::get('/careers', [PublicController::class, 'careers'])->name('careers');
 Route::post('/solicitud', [PublicController::class, 'store'])->name('career_request.store');
 Route::get('/articles/author/{author}', [ArticleController::class, 'showByAuthor'])->name('articles.showByAuthor');

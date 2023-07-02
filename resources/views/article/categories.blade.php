@@ -22,7 +22,7 @@
                 <p class="card-text">Categories:</p>
                 <ul>
                     @foreach ($article->categories as $category)
-                        <li><a href="{{ route('categories.showArticles', $category->id) }}">{{ $category->name }}</a></li>
+                        <li><a href="{{ route('categories.showArticlesCategory', $category->id) }}">{{ $category->name }}</a></li>
                     @endforeach
                 </ul>
 

@@ -33,16 +33,20 @@ class ArticleController extends Controller
     return view('home', compact('articles'));
 }
 
-
-public function showArticles(Category $category)
+public function showArticlesCategory(Category $category)
 {
     $articles = $category->articles()
-                         ->whereNotNull('category_id')
-                         ->where('category_id', '!=', 0)
-                         ->get();
+        ->join('article_category as ac1', 'articles.id', '=', 'ac1.article_id')
+        ->join('article_category as ac2', 'articles.id', '=', 'ac2.article_id')
+        ->where('ac1.category_id', '=', 2)
+        ->whereNotNull('articles.category_id')
+        ->where('articles.id', '!=', 0)
+        ->get();
 
     return view('article.categories', compact('articles', 'category'));
 }
+
+
 
 public function searchArticles(Request $request)
 {

@@ -16,7 +16,7 @@
                         <ul>
                             @foreach ($article->categories as $category)
                                 <li>
-                                    <a href="{{ route('categories.showArticles', $category->id) }}">{{ $category->name ?? 'N/A' }}</a>
+                                    <a href="{{ route('categories.showArticlesCategory', $category->id) }}">{{ $category->name ?? 'N/A' }}</a>
                                 </li>
                             @endforeach
                         </ul>
