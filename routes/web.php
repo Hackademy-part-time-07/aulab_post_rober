@@ -38,6 +38,7 @@ Route::post('/admin/toggleVisibility/{id}', [AdminController::class, 'toggleVisi
 
 Route::put('/admin/articles/{id}/update-category', [AdminController::class, 'updateCategory'])->name('admin.updateCategory');
 Route::get('/searchArticles', [AdminController::class, 'searchArticles'])->name('admin.searchArticles');
+Route::get('search', [ArticleController::class, 'search'])->name('search');
 
 // Rutas accesibles para todos los usuarios
 

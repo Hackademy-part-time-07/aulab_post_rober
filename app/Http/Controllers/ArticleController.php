@@ -46,6 +46,22 @@ public function showArticlesCategory(Category $category)
     return view('article.categories', compact('articles', 'category'));
 }
 
+public function search(Request $request)
+{
+    $searchTerm = $request->input('search');
+
+    $articles = Article::where('title', 'like', '%'.$searchTerm.'%')
+        ->orWhere('subtitle', 'like', '%'.$searchTerm.'%')
+        ->orWhere('body', 'like', '%'.$searchTerm.'%')
+        ->orWhereHas('user', function ($query) use ($searchTerm) {
+            $query->where('name', 'like', '%'.$searchTerm.'%');
+        })
+        ->select('articles.*') // Seleccionar todos los campos de articles
+        ->get();
+
+    return view('search', compact('articles', 'searchTerm'));
+}
+
 
 
 public function searchArticles(Request $request)
