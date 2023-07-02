@@ -34,21 +34,21 @@ public function welcome(){
   
 
 
-  public function store(Request $request)
-  {
-      // Validar y procesar los datos del formulario
-      $role = $request->input('papel');
-      $message = $request->input('message'); // Cambiar a $message
+public function store(Request $request)
+{
+    // Validar y procesar los datos del formulario
+    $role = $request->input('papel');
+    $mensaje = $request->input('mensaje');
 
-  
-      $email = auth()->user()->email; // Obtener el correo electrónico del usuario registrado
+    $email = auth()->user()->email; // Obtener el correo electrónico del usuario registrado
      
-      // Envía el correo electrónico a través de Mailtrap
-      Mail::to('mailtrap-email@example.com')->send(new CareerRequestMail($role, $message, $email));
+    // Envía el correo electrónico a través de Mailtrap
+    Mail::to('mailtrap-email@example.com')->send(new CareerRequestMail($role, $mensaje, $email));
       
-      // Redirige al usuario a la ruta "home" con un message de éxito
-      return redirect()->route('home')->with('success', 'Correo electrónico enviado correctamente.');
-  }
+    // Redirige al usuario a la ruta "home" con un mensaje de éxito
+    return redirect()->route('home')->with('success', 'Correo electrónico enviado correctamente.');
+}
+
   
 
   

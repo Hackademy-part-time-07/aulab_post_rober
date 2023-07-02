@@ -29,7 +29,7 @@
                     @auth
                     @if(auth()->user()->is_admin || auth()->user()->is_revisor)
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('dashboardrev') }}">Modificar Nuevos</a>
+                            <a class="nav-link" href="{{ route('dashboardrev') }}">Modificar ARTICLES</a>
                         </li>
                     @endif
                 @endauth

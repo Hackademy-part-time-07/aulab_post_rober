@@ -6,19 +6,20 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Http\Request;
 
 class CareerRequestMail extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $role;
-    public $message;
+    public $mensaje;
     public $email;
 
-    public function __construct($role, $message, $email)
+    public function __construct($role, $mensaje, $email)
     {
         $this->role = $role;
-        $this->message = $message;
+        $this->mensaje = $mensaje;
         $this->email = $email;
     }
 
@@ -28,9 +29,8 @@ class CareerRequestMail extends Mailable
                     ->view('emails.career_request')
                     ->with([
                         'role' => $this->role,
-                        'message' => $this->message,
+                        'mensaje' => $this->mensaje,
                         'email' => $this->email
                     ]);
     }
 }
-

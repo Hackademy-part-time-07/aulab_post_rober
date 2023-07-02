@@ -26,8 +26,9 @@
 
                             <div class="form-group">
                                 <label for="mensaje">Mensaje de presentación:</label>
-                                <textarea id="mensaje" name="mensaje" rows="5" class="form-control" placeholder="Escribe aquí tu mensaje de presentación"></textarea>
+                                <input id="mensaje" name="mensaje" rows="5" class="form-control" placeholder="Escribe aquí tu mensaje de presentación"></input>
                             </div>
+                            
 
                             <button type="submit" class="btn btn-primary">Enviar solicitud</button>
                         </form>
