@@ -26,6 +26,14 @@
                         </li>
                     </ul>
 
+                    @auth
+                    @if(auth()->user()->is_admin || auth()->user()->is_revisor)
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('dashboardrev') }}">Modificar Nuevos</a>
+                        </li>
+                    @endif
+                @endauth
+
 
                     @if(auth()->user()->is_admin == 1)
                     <li class="nav-item">

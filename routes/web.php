@@ -6,6 +6,8 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RevisorController;
+
 use App\Models\User;
 
 
@@ -19,7 +21,6 @@ use App\Models\User;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
 Route::get('/', [ArticleController::class, 'home'])->name('home');
 Route::get('/articles/create', [ArticleController::class, 'create'])->name('articles.create');
 Route::post('/articles', [ArticleController::class, 'store'])->name('articles.store');
@@ -29,13 +30,20 @@ Route::get('/categories/{category}', [ArticleController::class, 'showArticles'])
 Route::get('/careers', [PublicController::class, 'careers'])->name('careers');
 Route::post('/solicitud', [PublicController::class, 'store'])->name('career_request.store');
 Route::get('/articles/author/{author}', [ArticleController::class, 'showByAuthor'])->name('articles.showByAuthor');
-Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
-Route::put('/users/{userId}/updateRole', [AdminController::class, 'updateRole'])->name('admin.updateRole');
+Route::get('/dashboardrev', [ArticleController::class, 'dashboardrev'])->name('dashboardrev');
+Route::post('/admin/approvearticle/{id}', [AdminController::class, 'approveArticle'])->name('admin.approvearticle');
+Route::post('/admin/deleteArticle/{id}', [AdminController::class, 'deleteArticle'])->name('admin.deleteArticle');
 
+Route::post('/admin/toggleVisibility/{id}', [AdminController::class, 'toggleVisibility'])->name('admin.toggleVisibility');
 
+Route::put('/admin/articles/{id}/update-category', [AdminController::class, 'updateCategory'])->name('admin.updateCategory');
+Route::get('/searchArticles', [AdminController::class, 'searchArticles'])->name('admin.searchArticles');
+
+// Rutas accesibles para todos los usuarios
 
 Route::middleware('auth')->group(function () {
+    // Rutas accesibles solo para usuarios autenticados
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
-Route::put('/users/{userId}/updateRole', [AdminController::class, 'updateRole'])->name('admin.updateRole');
-
+    Route::put('/users/{userId}/updateRole', [AdminController::class, 'updateRole'])->name('admin.updateRole');
 });
+

@@ -7,26 +7,88 @@ use App\Models\User;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Post;
+use Carbon\Carbon;
 
 class ArticleController extends Controller
 {
     public function index()
-    {
-        $articles = Article::all();
-        return view('article.index', compact('articles'));
-    }
+{
+    $articles = Article::whereNotNull('category_id')
+                       ->where('category_id', '!=', 0)
+                       ->get();
+
+    return view('article.index', compact('articles'));
+}
+
 
     public function home()
-    {
-        $articles = Article::latest()->take(5)->get();
-        return view('home', compact('articles'));
+{
+    $articles = Article::whereNotNull('category_id')
+                       ->where('category_id', '!=', 0)
+                       ->latest()
+                       ->take(5)
+                       ->get();
+
+    return view('home', compact('articles'));
+}
+
+
+public function showArticles(Category $category)
+{
+    $articles = $category->articles()
+                         ->whereNotNull('category_id')
+                         ->where('category_id', '!=', 0)
+                         ->get();
+
+    return view('article.categories', compact('articles', 'category'));
+}
+
+public function searchArticles(Request $request)
+{
+    $dateFilter = $request->input('date_filter');
+
+    // Calcular la fecha límite en función del intervalo seleccionado
+    $limitDate = null;
+    $currentDate = Carbon::now();
+
+    switch ($dateFilter) {
+        case '1_hour':
+            $limitDate = $currentDate->subHour();
+            break;
+        case '12_hours':
+            $limitDate = $currentDate->subHours(12);
+            break;
+        case '24_hours':
+            $limitDate = $currentDate->subDay();
+            break;
+        case '3_days':
+            $limitDate = $currentDate->subDays(3);
+            break;
+        case '7_days':
+            $limitDate = $currentDate->subWeek();
+            break;
+        case '15_days':
+            $limitDate = $currentDate->subDays(15);
+            break;
+        case '1_month':
+            $limitDate = $currentDate->subMonth();
+            break;
+        case '3_months':
+            $limitDate = $currentDate->subMonths(3);
+            break;
+        case '1_year':
+            $limitDate = $currentDate->subYear();
+            break;
     }
 
-    public function showArticles(Category $category)
-    {
-        $articles = $category->articles;
-        return view('article.categories', compact('articles', 'category'));
-    }
+    // Filtrar los artículos según la fecha límite
+    $articles = Article::where('created_at', '>', $limitDate)->get();
+
+    return view('admin.articles', compact('articles'));
+}
+
+
 
 
     public function showByAuthor(User $author)
@@ -43,6 +105,29 @@ class ArticleController extends Controller
     $user = auth()->user(); // Obtener el usuario autenticado
     return view('article.create', compact('user'));
 }
+
+
+
+    public function dashboard()
+    {
+        $users = User::where('is_revisor', false)->get();
+        $posts = Post::where('is_published', true)
+            ->whereNull('reviewed_at')
+            ->get();
+        return view('dashboardrev')->with('users', $users)->with('posts', $posts);
+    }
+
+
+    public function dashboardrev()
+    {
+        $articles = Article::whereHas('user', function ($query) {
+            $query->where('is_writer', true)
+                ->where('is_revisor', false);
+        })->get();
+    
+        return view('dashboardrev', compact('articles'));
+    }
+    
 
 
     public function store(Request $request)
