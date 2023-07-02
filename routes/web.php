@@ -33,6 +33,9 @@ Route::get('/articles/author/{author}', [ArticleController::class, 'showByAuthor
 Route::get('/dashboardrev', [ArticleController::class, 'dashboardrev'])->name('dashboardrev');
 Route::post('/admin/approvearticle/{id}', [AdminController::class, 'approveArticle'])->name('admin.approvearticle');
 Route::post('/admin/deleteArticle/{id}', [AdminController::class, 'deleteArticle'])->name('admin.deleteArticle');
+Route::post('/admin/addTag/{article}', [ArticleController::class, 'addTag'])->name('admin.addTag');
+Route::get('/tags/{tagId}', [ArticleController::class, 'showArticlesByTag'])->name('tags.showArticlesByTag');
+
 
 Route::post('/admin/toggleVisibility/{id}', [AdminController::class, 'toggleVisibility'])->name('admin.toggleVisibility');
 

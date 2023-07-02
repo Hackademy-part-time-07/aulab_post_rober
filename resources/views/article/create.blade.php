@@ -43,6 +43,20 @@
                             @endforeach
                         </div>
 
+
+                        <label for="tags">Tags:</label>
+                        <input type="text" name="tags" id="tags">
+
+                        
+                        
+
+                        
+                        
+                        
+
+
+
+
                         <button type="submit" class="btn btn-primary">Create</button>
                    
                         @guest

@@ -5,6 +5,7 @@ use App\Models\Article;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Models\Tag;
 
 
 class AdminController extends Controller
@@ -99,6 +100,17 @@ public function searchArticles(Request $request)
     $articles = Article::where('created_at', '>', $limitDate)->get();
 
     return view('dashboardrev')->with('articles', $articles);
+}
+
+public function searchByTag($tagId)
+{
+    $tag = Tag::findOrFail($tagId);
+
+    // Obtener todas las noticias relacionadas con el tag
+    $articles = $tag->articles;
+
+    // Aquí puedes pasar los datos a una vista para mostrar los resultados
+    return view('admin.search_results', compact('articles'));
 }
 
 

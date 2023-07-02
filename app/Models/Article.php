@@ -37,4 +37,26 @@ class Article extends Model
     {
         return $this->attributes['visibility'] ?? 'private';
     }
+
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
+
+    public function updateTags(Request $request, Article $article)
+{
+    $validatedData = $request->validate([
+        'tags' => 'required|string',
+    ]);
+
+    $tags = explode(',', $validatedData['tags']);
+    $article->retag($tags);
+
+    return redirect()->route('articles.index')->with('success', 'Tags actualizados exitosamente.');
+}
+
+
+    
 }

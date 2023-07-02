@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Models\User;
+use App\Models\Tag;
+
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -19,6 +21,41 @@ class ArticleController extends Controller
                        ->get();
 
     return view('article.index', compact('articles'));
+}
+
+public function showArticlesByTag($tagId)
+{
+    $tag = Tag::findOrFail($tagId);
+    $articles = $tag->articles;
+
+    return view('tags', compact('articles'));
+}
+public function addTag(Request $request, $articleId)
+{
+    // Obtener el nombre de la etiqueta del formulario
+    $tagName = $request->input('tag_name');
+
+    // Verificar si la etiqueta ya existe en la base de datos
+    $tag = Tag::where('name', $tagName)->first();
+
+    if (!$tag) {
+        // Si la etiqueta no existe, crear una nueva instancia
+        $tag = new Tag();
+        $tag->name = $tagName;
+        $tag->save();
+    }
+
+    // Obtener el artículo al que se desea agregar la etiqueta
+    $article = Article::findOrFail($articleId);
+
+    // Verificar si el artículo ya tiene la etiqueta
+    if (!$article->tags->contains($tag->id)) {
+        // Si el artículo no tiene la etiqueta, agregarla
+        $article->tags()->attach($tag->id);
+    }
+
+    // Redirigir a la página de administración de artículos o realizar alguna otra acción
+    return redirect()->route('dashboardrev')->with('success', 'Etiqueta agregada correctamente al artículo.');
 }
 
 
@@ -162,6 +199,7 @@ public function searchArticles(Request $request)
                 'image' => 'required|image',
                 'category_id' => 'required|array',
                 'user_id' => 'required|exists:users,id', // Asegurar que el user_id exista en la tabla users
+                'tags' => 'nullable|string' // Tags ingresados por el usuario (opcional)
                 // Otros campos validados...
             ]);
     
@@ -182,12 +220,22 @@ public function searchArticles(Request $request)
             $categories = $validatedData['category_id'];
             $article->categories()->attach($categories);
     
+            // Obtener los tags ingresados por el usuario
+            $tags = explode(',', $validatedData['tags']);
+    
+            // Asociar los tags al artículo
+            foreach ($tags as $tagName) {
+                $tag = Tag::firstOrCreate(['name' => trim($tagName)]);
+                $article->tags()->attach($tag);
+            }
+    
             return redirect()->route('articles.index');
         } else {
             // Usuario no autorizado para crear artículos
             return redirect()->route('articles.index')->with('warning', 'Solo los escritores oficiales pueden crear artículos. Si quieres colaborar, por favor contáctanos en la sección de carreras.');
         }
     }
+    
     
 
 
