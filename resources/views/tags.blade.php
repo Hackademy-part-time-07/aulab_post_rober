@@ -1,10 +1,11 @@
 <x-layout>
-    <div class="container">
+
+    <div class="container" style="display: flex; justify-content: center; margin-top: 30px; margin-bottom:30px;">
 
         <div class="row justify-content-around">
             @foreach ($articles as $article)
                 <div class="card">
-                    <img src="{{ asset($article->image) }}" class="card-img-top" alt="Article Image" width="250px" height="250px">
+                    <img src="{{ asset($article->image) }}" class="card-img-top" alt="Article Image" width="250px" height="550px">
 
                     <div class="card-body">
                         <h5 class="card-title">{{ $article->title }}</h5>

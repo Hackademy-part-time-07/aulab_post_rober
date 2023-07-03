@@ -17,8 +17,14 @@
   list-style: none;
   margin: 0;
   padding: 0;
+
 }
 
+footer ul li{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
   
   @media (max-width: 768px) {
     .card {
@@ -26,3 +32,80 @@
     }
   }
   
+
+  /* Estilos para la barra de navegación */
+  .navbar {
+    background-color: #c5d9ee;
+    border-bottom: 1px solid #e9ecef;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+  }
+
+.container {
+  display: flex;
+  justify-content:space-around;
+}
+
+.navbar-brand {
+  font-weight: bold;
+  color: #6b849d;
+}
+
+.navbar-toggler {
+  border: none;
+  outline: none;
+}
+
+
+.nav-link {
+  display: inline-block;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: #fcfddf !important;
+  font-size: 2.25rem;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  text-shadow: 2px 2px 4px rgba(26, 26, 26, 0.5);
+  -webkit-text-stroke: 1px rgb(220, 7, 7); 
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  
+}
+.scrollable-text {
+  max-height: 200px; /* Ajusta esta altura según tus necesidades */
+  overflow-y: auto;
+  text-align: justify;
+}
+
+
+.nav-link:hover {
+  color: #ffffff;
+  background-color: #77ade6;
+  border-radius: 5px;
+  transform: translateZ(10px);
+}
+
+
+
+.form-control {
+  border-color: #ced4da;
+}
+
+.btn-outline-success {
+  color: #28a745;
+  border-color: #28a745;
+}
+
+.btn-outline-success:hover {
+  color: #fff !important;
+  background-color: #28a745;
+  border-color: #28a745;
+}
+
+/* Estilos para dispositivos móviles */
+@media (max-width: 768px) {
+  .navbar-collapse {
+    background-color: #f8f9fa;
+    border-top: 1px solid #e9ecef;
+    padding-top: 10px;
+  }
+}

@@ -19,7 +19,9 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ $article->title }}</h5>
                         <h6 class="card-subtitle mb-2 text-muted">{{ $article->subtitle }}</h6>
-                        <p class="card-text">{{ $article->body }}</p>
+                        <div class="card-text scrollable-text">
+                            <p>{{ $article->body }}</p>
+                        </div>
                         <p class="card-text">Categories:</p>
                         <ul>
                             @foreach ($article->categories as $category)
