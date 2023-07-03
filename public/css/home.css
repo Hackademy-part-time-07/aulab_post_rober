@@ -6,14 +6,14 @@
   }
 
   .container-fluid-home-h1{
-    background-color: #ec9af2;
+    background-color: #eeb9f1;
   }
   
   .card {
     width: 500px;
     margin: 10px;
     text-align: center;
-    background-color: #e18fd3;
+    background-color: #dda4d4;
   }
 
   .card img{
@@ -84,7 +84,7 @@ footer ul li{
   
 }
 .scrollable-text {
-  max-height: 200px; /* Ajusta esta altura según tus necesidades */
+  max-height: 190px; /* Ajusta esta altura según tus necesidades */
   overflow-y: auto;
   text-align: justify;
 }
@@ -118,7 +118,7 @@ footer ul li{
 @media (max-width: 768px) {
   .navbar-collapse {
     background-color: #faf8fa;
-    border-top: 1px solid #c811aa;
+    border-top: 1px solid #e081d1;
     padding-top: 10px;
   }
 }

@@ -1,7 +1,7 @@
 
         <nav class="navbar navbar-expand-xl navbar-light bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="{{ route('home') }}">
                     <img src="{{ asset('images/aulab.png') }}" alt="Logo" width="200" height="200">
                 </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,7 +27,7 @@
                         
                             <li><a class="dropdown-item" href="{{ route('articles.create') }}">Create Article</a></li>
                             @if(auth()->user()->is_admin || auth()->user()->is_revisor)
-                                <li><a class="dropdown-item" href="{{ route('dashboardrev') }}">Modify visibility</a></li>
+                                <li><a class="dropdown-item" href="{{ route('dashboardrev') }}">Revisor visibility</a></li>
                             @endif
                             @if(auth()->user()->is_admin == 1)
                                 <li><a class="dropdown-item" href="{{ route('dashboard') }}">Dashboard Admin</a></li>
@@ -46,7 +46,7 @@
                     </li>
                 @else
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                        <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="font-size: 1rem; margin-bottom: -10px;">Logout</a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>

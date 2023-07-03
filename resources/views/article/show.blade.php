@@ -1,7 +1,7 @@
 <x-layout>
-    <div class="container">
+    <div class="container" style="margin-top: 30px; margin-bottom: 80px;">
         <div class="card">
-            <img src="{{ asset($article->image) }}" class="card-img-top" alt="Article Image" width="250px">
+            <img src="{{ asset($article->image) }}" class="card-img-top" alt="Article Image" width="250px" style="margin-left: -12.5px;">
             <div class="card-body">
                 <h5 class="card-title">{{ $article->title }}</h5>
                 <h6 class="card-subtitle mb-2 text-muted">{{ $article->subtitle }}</h6>
