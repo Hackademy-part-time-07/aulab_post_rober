@@ -1,6 +1,9 @@
-<nav class="navbar navbar-expand-xl navbar-light bg-light">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">Navbar</a>
+
+        <nav class="navbar navbar-expand-xl navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <img src="{{ asset('images/aulab.png') }}" alt="Logo" width="200" height="200">
+                </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -10,7 +13,7 @@
                     <a class="nav-link active" aria-current="page" href="{{ route('home') }}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('articles.index') }}">Index</a>
+                    <a class="nav-link" href="{{ route('articles.index') }}">Articles</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('careers') }}">Careers</a>

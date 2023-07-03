@@ -4,12 +4,26 @@
     justify-content: center;
     align-items: center;
   }
+
+  .container-fluid-home-h1{
+    background-color: #ec9af2;
+  }
   
   .card {
     width: 500px;
     margin: 10px;
     text-align: center;
-    background-color: rgb(190, 214, 214);
+    background-color: #e18fd3;
+  }
+
+  .card img{
+    width: 105%;
+  }
+
+
+  .card-body{
+    background-color: #e18fd3;
+    margin: -12px;
   }
 
   .card-body ul,
@@ -35,7 +49,6 @@ footer ul li{
 
   /* Estilos para la barra de navegación */
   .navbar {
-    background-color: #c5d9ee;
     border-bottom: 1px solid #e9ecef;
     transform-style: preserve-3d;
     perspective: 1000px;
@@ -61,7 +74,7 @@ footer ul li{
   display: inline-block;
   padding: 10px 20px;
   text-decoration: none;
-  color: #fcfddf !important;
+  color: #ec9af2 !important;
   font-size: 2.25rem;
   font-weight: bold;
   transition: all 0.3s ease;
@@ -79,7 +92,7 @@ footer ul li{
 
 .nav-link:hover {
   color: #ffffff;
-  background-color: #77ade6;
+  background-color: #dfe8a9;
   border-radius: 5px;
   transform: translateZ(10px);
 }
@@ -87,7 +100,7 @@ footer ul li{
 
 
 .form-control {
-  border-color: #ced4da;
+  border-color: hsl(210, 14%, 83%);
 }
 
 .btn-outline-success {
@@ -104,8 +117,8 @@ footer ul li{
 /* Estilos para dispositivos móviles */
 @media (max-width: 768px) {
   .navbar-collapse {
-    background-color: #f8f9fa;
-    border-top: 1px solid #e9ecef;
+    background-color: #faf8fa;
+    border-top: 1px solid #c811aa;
     padding-top: 10px;
   }
 }

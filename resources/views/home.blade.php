@@ -5,7 +5,7 @@
         </div>
     @endif
 
-    <div class="container-fluid p-5 bg-info text-center text-white">
+    <div class="container-fluid-home-h1 p-5  text-center text-white">
         <div class="row justify-content-center">
             <h1 class="display-1">Aulab Post</h1>
         </div>
@@ -15,7 +15,7 @@
         <div class="row justify-content-around">
             @foreach ($articles as $article)
                 <div class="card">
-                    <img src="{{ asset($article->image) }}" class="card-img-top" alt="Article Image" height="550px">
+                    <img src="{{ asset($article->image) }}" class="card-img-top" alt="Article Image" height="550px" style="margin-left: -12px;">
                     <div class="card-body">
                         <h5 class="card-title">{{ $article->title }}</h5>
                         <h6 class="card-subtitle mb-2 text-muted">{{ $article->subtitle }}</h6>
