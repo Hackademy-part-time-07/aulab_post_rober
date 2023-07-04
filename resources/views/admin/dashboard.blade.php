@@ -35,7 +35,7 @@
                         <input type="checkbox" name="is_revisor" value="1" {{ $user->is_revisor ? 'checked' : '' }}>
                     </td>
                     <td class="px-4 py-2">
-                        <form action="{{ route('admin.updateRole', $user->id) }}" method="POST">
+                        <form action="{{ route('admin.updateRole', $user->id) }}" method="POST" class="inline">
                             @csrf
                             @method('PUT')
                             <div>
@@ -50,6 +50,12 @@
                                 Actualizar Roles
                             </button>
                         </form>
+                        <form action="{{ route('admin.deleteUser', $user->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit">Eliminar Usuario</button>
+                        </form>
+                        
                     </td>
                 </tr>
                 @endforeach

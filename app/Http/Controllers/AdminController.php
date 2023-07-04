@@ -147,6 +147,13 @@ public function deleteArticle($id)
     return redirect()->back()->with('success', 'Article deleted successfully.');
 }
 
+public function deleteUser(User $user)
+{
+    $user->delete();
+
+    return redirect()->route('home')->with('success', 'Usuario eliminado exitosamente.');
+}
+
 
 
     

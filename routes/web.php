@@ -38,15 +38,8 @@ Route::post('/admin/deleteArticle/{id}', [AdminController::class, 'deleteArticle
 Route::post('/admin/addTag/{article}', [ArticleController::class, 'addTag'])->name('admin.addTag');
 Route::get('/tags/{tagId}', [ArticleController::class, 'showArticlesByTag'])->name('tags.showArticlesByTag');
 Route::get('auth/forgotpassword', [PublicController::class, 'forgotpassword'])->name('forgotpassword');
-
-
-
-
-
-
-
-
 Route::post('/admin/toggleVisibility/{id}', [AdminController::class, 'toggleVisibility'])->name('admin.toggleVisibility');
+Route::delete('/admin/users/{user}', [AdminController::class, 'deleteUser'])->name('admin.deleteUser');
 
 Route::put('/admin/articles/{id}/update-category', [AdminController::class, 'updateCategory'])->name('admin.updateCategory');
 Route::get('/searchArticles', [AdminController::class, 'searchArticles'])->name('admin.searchArticles');
