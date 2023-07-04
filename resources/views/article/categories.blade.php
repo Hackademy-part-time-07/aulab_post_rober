@@ -7,7 +7,7 @@
 
         <div class="card">
 
-            <img src="{{ asset($article->image) }}" class="card-img-top" alt="Article Image" width="250px" style="margin-left: -12.4px;">
+            <img src="{{ asset($article->image) }}" class="card-img-top" alt="Article Image" width="250px" style="margin-left: 0px;">
 
             <div class="card-body">
 

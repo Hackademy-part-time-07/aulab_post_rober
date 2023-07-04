@@ -7,6 +7,8 @@ use App\Http\Controllers\PublicController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RevisorController;
+use Laravel\Fortify\Http\Controllers\PasswordResetLinkController;
+use Laravel\Fortify\Http\Controllers\NewPasswordController;
 
 use App\Models\User;
 
@@ -35,6 +37,13 @@ Route::post('/admin/approvearticle/{id}', [AdminController::class, 'approveArtic
 Route::post('/admin/deleteArticle/{id}', [AdminController::class, 'deleteArticle'])->name('admin.deleteArticle');
 Route::post('/admin/addTag/{article}', [ArticleController::class, 'addTag'])->name('admin.addTag');
 Route::get('/tags/{tagId}', [ArticleController::class, 'showArticlesByTag'])->name('tags.showArticlesByTag');
+Route::get('auth/forgotpassword', [PublicController::class, 'forgotpassword'])->name('forgotpassword');
+
+
+
+
+
+
 
 
 Route::post('/admin/toggleVisibility/{id}', [AdminController::class, 'toggleVisibility'])->name('admin.toggleVisibility');
@@ -50,4 +59,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
     Route::put('/users/{userId}/updateRole', [AdminController::class, 'updateRole'])->name('admin.updateRole');
 });
+
+
+Auth::routes();
 

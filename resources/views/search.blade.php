@@ -8,7 +8,7 @@
     <div class="card-columns" style="display: flex; justify-conten: spacearound; padding-bottom: -100px; margin: 20px;">
         @foreach ($articles as $article)
             <div class="card" style="margin-bottom: 50px; border: none;">
-                <img src="{{ $article->image }}" class="card-img-top" alt="Article Image" style="margin-left: -12px; width: 376px;">
+                <img src="{{ $article->image }}" class="card-img-top" alt="Article Image" style=" width: 100%;">
                 <div class="card-body">
                     <h5 class="card-title">{{ $article->title }}</h5>
                     <p class="card-text">{{ $article->subtitle }}</p>

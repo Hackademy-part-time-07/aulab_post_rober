@@ -17,13 +17,12 @@
   }
 
   .card img{
-    width: 105%;
+    width: 100%;
   }
 
 
   .card-body{
     background-color: #e18fd3;
-    margin: -12px;
   }
 
   .card-body ul,

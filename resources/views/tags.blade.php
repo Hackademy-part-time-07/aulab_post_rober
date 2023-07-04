@@ -1,7 +1,5 @@
 <x-layout>
-
     <div class="container" style="display: flex; justify-content: center; margin-top: 30px; margin-bottom:30px;">
-
         <div class="row justify-content-around">
             @foreach ($articles as $article)
                 <div class="card">

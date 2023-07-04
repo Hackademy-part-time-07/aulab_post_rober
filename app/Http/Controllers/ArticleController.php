@@ -75,13 +75,12 @@ public function showArticlesCategory(Category $category)
     $articles = $category->articles()
         ->join('article_category as ac1', 'articles.id', '=', 'ac1.article_id')
         ->join('article_category as ac2', 'articles.id', '=', 'ac2.article_id')
-        ->where('ac1.category_id', '=', 2)
-        ->whereNotNull('articles.category_id')
-        ->where('articles.id', '!=', 0)
+        ->where('ac1.category_id', '=', $category->id)
         ->get();
 
     return view('article.categories', compact('articles', 'category'));
 }
+
 
 public function search(Request $request)
 {

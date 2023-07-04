@@ -3,7 +3,7 @@
         <div class="row justify-content-around">
             @foreach ($articles as $article)
                 <div class="card">
-                    <img src="{{ asset($article->image) }}" class="card-img-top" alt="Article Image" width="250px" height="600px" style="margin-left: -12px;">
+                    <img src="{{ asset($article->image) }}" class="card-img-top" alt="Article Image" width="250px" height="600px">
 
                     <div class="card-body">
                         <h5 class="card-title">{{ $article->title }}</h5>
@@ -23,15 +23,15 @@
                             @endforeach
                         </ul>
                         
-                        <p class="card-text" style="margin-top: 10px; margin-bottom:-5px;">Tags:</p>
-                        <ul>
-                            @foreach ($article->tags as $tag)
-                                <li>
-                                    <a href="{{ route('tags.showArticlesByTag', $tag->id) }}">{{ $tag->name }}</a>
-
-                                </li>
-                            @endforeach
-                        </ul>
+                        <p class="card-text">Tags:
+                            <ul class="list-inline">
+                                @foreach ($article->tags as $tag)
+                                    <li class="list-inline-item">
+                                        <a href="{{ route('tags.showArticlesByTag', $tag->id) }}" class="badge badge-secondary">{{ $tag->name }}</a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </p>
                      
                         <a href="{{ route('articles.show', $article->id) }}" class="btn btn-primary" style="margin-top: 10px; margin-bottom: 20px;">Read More</a>
                     </div>

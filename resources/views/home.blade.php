@@ -14,9 +14,9 @@
 
     <div class="container" style="margin-top: 30px; margin-bottom: 80px;">
         <div class="row justify-content-around">
-            @foreach ($articles as $article)
+            @forelse ($articles as $article)
                 <div class="card">
-                    <img src="{{ asset($article->image) }}" class="card-img-top" alt="Article Image" height="550px" style="margin-left: -12px;">
+                    <img src="{{ asset($article->image) }}" class="card-img-top custom-card-image" alt="Article Image">
                     <div class="card-body">
                         <h5 class="card-title">{{ $article->title }}</h5>
                         <h6 class="card-subtitle mb-2 text-muted">{{ $article->subtitle }}</h6>
@@ -39,7 +39,6 @@
                             @foreach ($article->tags as $tag)
                                 <li>
                                     <a href="{{ route('tags.showArticlesByTag', $tag->id) }}">{{ $tag->name }}</a>
-
                                 </li>
                             @endforeach
                         </ul>
@@ -47,7 +46,9 @@
                         <a href="{{ route('articles.show', $article->id) }}" style="margin-top: 10px;" class="btn btn-primary">Read More</a>
                     </div>
                 </div>
-            @endforeach
+            @empty
+                <p>No hay artículos disponibles.</p>
+            @endforelse
         </div>
 
         @guest
